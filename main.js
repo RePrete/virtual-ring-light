@@ -1,5 +1,5 @@
-const {app, BrowserWindow, Tray, ipcMain, MessageChannelMain} = require('electron')
-const path = require('path')
+const {app, BrowserWindow, Tray, ipcMain, Menu, MenuItem} = require('electron');
+const path = require('path');
 const positioner = require('electron-traywindow-positioner');
 
 let lightWindow, tray, trayWindow;
@@ -91,10 +91,23 @@ function createTrayWindow() {
   });
 }
 
+function setupTrayMenu() {
+  tray.contextMenu = Menu.buildFromTemplate([
+    new MenuItem({
+      label: "Quit",
+      type: "normal",
+      click() {
+        app.quit();
+      },
+    })
+  ]);
+}
+
 app.whenReady().then(() => {
   createWindow()
   createTrayWindow();
   createTray();
+  setupTrayMenu();
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

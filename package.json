@@ -1,10 +1,13 @@
 {
   "name": "virtual-ring-light",
   "version": "0.0.1",
+  "productName": "Virtual ring light",
   "description": "A minimal virtual ring light",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "repository": "https://github.com/RePrete/virtual-ring-light",
   "keywords": [
@@ -13,9 +16,56 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.66",
+    "@electron-forge/maker-deb": "^6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
+    "@electron-forge/maker-zip": "^6.0.0-beta.66",
+    "@electron-forge/publisher-github": "^6.0.0-beta.66",
     "electron": "^20.1.4"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "electron-traywindow-positioner": "^1.1.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "assets/systemIcon"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "virtual_ring_light"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "RePrete",
+              "name": "virtual-ring-light"
+            }
+          }
+        }
+      ]
+    }
   }
 }
